@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+***********************************************************************************************
+ExtMap.on.Build.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+***********************************************************************************************
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask TaskName="ExtMap.MSBuild.Tools.Emm" AssemblyFile="$(MSBuildThisFileDirectory).\ExtMap.MSBuild.Tools.dll" />
+
+  <PropertyGroup>
+    <EmmToolPath>$(MSBuildThisFileDirectory)..\tools</EmmToolPath>
+  </PropertyGroup>
+  
+  <Target Name="GenerateExtMapFile" Condition=" '$(AssemblyOriginatorKeyFile)' != '' AND '$(SignAssembly)' == 'true' ">
+    <!-- The project must be signed to create an extmap file -->
+    <ExtMap.MSBuild.Tools.Emm Target="$(TargetPath)"
+                              AlternateCacheUri="$(ExtMapDownloadUri)"
+                              ToolPath="$(EmmToolPath)">      
+    </ExtMap.MSBuild.Tools.Emm>
+
+    <PropertyGroup>
+      <ExtMapOutputPath>$(OutDir)$(AssemblyName).extmap.xml</ExtMapOutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <FileWrites Include="$(ExtMapOutputPath)" />
+    </ItemGroup>
+  </Target>
+  
+  <!--
+  ============================================================
+  Hook into the build targets.
+  ============================================================
+  -->
+
+  <PropertyGroup>
+    <PrepareForRunDependsOn>
+      $(PrepareForRunDependsOn);
+      GenerateExtMapFile;
+    </PrepareForRunDependsOn>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata minClientVersion="2.8">
+    <id>ExtMap.for.MSBuild</id>
+    <version>1.0.1</version>
+    <title>ExtMap for MSBuild</title>
+    <authors>Jeff Winn</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <developmentDependency>true</developmentDependency>
+    <description>Generates an ExtMap.xml file for a Silverlight project during build.</description>
+    <copyright>Copyright (c) Jeff Winn. All rights reserved.</copyright>
+    <tags>silverlight msbuild build extmap</tags>
+  </metadata>
+  <files>    
+    <file src="ExtMap.MSBuild.Tools.dll" target="build"/>
+    <file src="ExtMap.for.MSBuild.targets" target="build"/>
+    <file src="tools\Emm.exe" target="tools"/>
+  </files>
+</package>
